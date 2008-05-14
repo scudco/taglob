@@ -1,20 +1,23 @@
-require 'rake'
-
-
 Gem::Specification.new do |s|
-  s.author = "Adam Anderson"
-  s.email = "adamandersonis@gmail.com"
-  s.version = '0.0.1'  
-  s.rubyforge_project = "taglob"
-  s.homepage = "http://github.com/scudco/taglob/tree"
+  s.name = %q{taglob}
+  s.version = "0.0.1"
+
+  s.specification_version = 2 if s.respond_to? :specification_version=
+
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.authors = ["Adam Anderson"]
+  s.date = %q{2008-05-14}
+  s.description = %q{Tagging for Ruby files}
+  s.email = %q{adamandersonis@gmail.com}
+  s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
+  s.files = ["History.txt", "Manifest.txt", "README.txt", "Rakefile", "lib/taglob.rb", "spec/spec_taglob.rb", "spec/tagged_files/foo.rb", "spec/tagged_files/foo_bar_buttz.rb", "spec/tagged_files/epic_lulz.rb"]
   s.has_rdoc = true
-  s.summary = "Tagging for Ruby files"
-  s.name = 'taglob'
-  s.require_path = 'lib'
-  s.files = FileList['lib/**/*','spec/**/*','README','History.txt']
-  s.description = <<EOF
-Taglob allows the tagging of Ruby files through special comment lines.
-It creates the Dir.taglob method which takes a pattern and any number of tags. \
-It then returns files tagged with the specified tags. 
-EOF
+  s.homepage = %q{http://taglob.rubyforge.org}
+  s.rdoc_options = ["--main", "README.txt"]
+  s.require_paths = ["lib"]
+  s.rubyforge_project = %q{taglob}
+  s.rubygems_version = %q{1.1.0}
+  s.summary = %q{Dir.taglob selects tagged Ruby files}
+
+  # s.add_dependency(%q<hoe>, [">= 1.5.1"])
 end
