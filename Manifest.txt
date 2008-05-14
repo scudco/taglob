@@ -1,0 +1,6 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+lib/taglob.rb
+spec/spec_taglob.rb

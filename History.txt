@@ -1,0 +1,6 @@
+=== 0.0.1 / 2008-05-14
+
+* Taglob "released"
+
+  * Drew bugged me enough to finish the specs
+
