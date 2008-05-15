@@ -13,7 +13,6 @@ Hoe.new('Taglob', Taglob::VERSION) do |p|
   p.remote_rdoc_dir = '' # Release to root
 end
 
-
 desc "Run all examples"
 Spec::Rake::SpecTask.new('spec') do |t|
   t.spec_files = FileList['spec/*.rb']
