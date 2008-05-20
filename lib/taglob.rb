@@ -16,7 +16,7 @@
 # Totally small, totally useless, totally taglob.
 
 class Taglob
-  VERSION = '0.0.1'
+  VERSION = '0.1.0'
 end
 
 class Dir
@@ -28,13 +28,13 @@ class Dir
       File.readlines(file).each do |line|
         parsed_tags = parsed_tags | self.parse_tags(line)
       end
-      tagged_files << file unless (parsed_tags & tags).empty?
+      tagged_files << file if (tags - parsed_tags).empty?
     end
     tagged_files
   end
   
   def self.parse_tags(line)
-    line =~ /^#tags:\s+(.*)/ ?$1.split(',') : []
+    line =~ /^# ?tags:\s+(.*)/ ? $1.split(',').map {|tag| tag.strip} : []
   end
   
 end

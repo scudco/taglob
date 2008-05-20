@@ -1,3 +1,11 @@
+=== 0.1.0 / 2008-05-19
+
+* Important changes
+  * Taglog now does ANDing logic rather than ORing
+This is really how it should have been to begin with. I just noobed it up is all.
+
+In version 0.0.1 if you did Dir.taglob('**/*.rb','foo','bar') it would select files as long they contained one of the tags(foo OR bar). In version 0.1.0 it will only select files which contain both tags(foo AND bar).
+
 === 0.0.1 / 2008-05-14
 
 * Taglob "released"
