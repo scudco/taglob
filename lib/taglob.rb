@@ -17,7 +17,7 @@
 
 require 'taglob/extensions'
 
-class Taglob
+module Taglob
   VERSION = '0.1.0'
   
   def self.invalid_tags(pattern,valid_tags)
