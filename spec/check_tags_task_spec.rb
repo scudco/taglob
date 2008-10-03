@@ -2,7 +2,7 @@ require 'spec/spec_helper'
 require 'taglob/rake'
 
 describe Taglob::Rake::CheckTagsTask do
-  
+    
   before :each do
     @file_name ="./lib/taglob/rake/check_tags_task.rb"
     @rake = Rake::Application.new
@@ -34,6 +34,27 @@ describe Taglob::Rake::CheckTagsTask do
   end
   
   it "should raise error if invalid tags present" do
+    $stderr.stubs(:puts)
+    task = Taglob::Rake::CheckTagsTask.new :error_out do |t|
+      t.pattern = 'spec/tagged_files/*.rb'
+      t.valid_tag_source = 'spec/invalid_tags.txt'
+    end
+    lambda {@rake.invoke_task('error_out')}.should raise_error(SystemExit)
+  end
+  
+  it "should print out the invalid file list" do
+    $stderr.expects(:puts).with(regexp_matches(/epic_lulz.rb/))
+    $stderr.expects(:puts).with(regexp_matches(/foo_bar_buttz.rb/))
+    task = Taglob::Rake::CheckTagsTask.new :error_out do |t|
+      t.pattern = 'spec/tagged_files/*.rb'
+      t.valid_tag_source = 'spec/invalid_tags.txt'
+    end
+    lambda {@rake.invoke_task('error_out')}.should raise_error(SystemExit)
+  end
+
+  it "should print out the list of invalid tags" do
+    $stderr.expects(:puts).with(regexp_matches(/ bar,buttz /))
+    $stderr.expects(:puts).with(regexp_matches(/ epic,lulz /))
     task = Taglob::Rake::CheckTagsTask.new :error_out do |t|
       t.pattern = 'spec/tagged_files/*.rb'
       t.valid_tag_source = 'spec/invalid_tags.txt'

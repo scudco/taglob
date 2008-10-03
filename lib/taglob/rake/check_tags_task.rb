@@ -7,6 +7,7 @@ module Taglob
     class CheckTagsTask < ::Rake::TaskLib
       attr_accessor :pattern
       attr_accessor :valid_tag_source
+      
       def initialize(name = :check_tags)
         @name = name
         yield self if block_given?
@@ -16,6 +17,7 @@ module Taglob
       def define
         task @name do
           invalid_tags = Taglob.invalid_tags(pattern,valid_tag_list)
+          invalid_tags.each {|file,tags| $stderr.puts "Invalid tags: #{tags.join(',')} found in #{file}." }
           exit 1 if !invalid_tags.empty?
         end
       end
