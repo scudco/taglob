@@ -13,9 +13,10 @@ describe Taglob::Rake::CheckTagsTask do
     Rake.application = nil 
   end
   
-  it "should raise error if invalid tags present" do
+  it "should define a rake task depending on provided name" do
     task = Taglob::Rake::CheckTagsTask.new :foozor
     @rake.task_names_include?("foozor").should be_true
   end
+  it "should raise error if invalid tags present" 
   it "should not raise error if only valid tags present"
 end
