@@ -17,6 +17,15 @@ describe Taglob::Rake::CheckTagsTask do
     task = Taglob::Rake::CheckTagsTask.new :foozor
     @rake.task_names_include?("foozor").should be_true
   end
+  
+  it "should be able to define rake task value in constructor do block" do
+    pattern = "spec/**/*_spec.rb"
+    task = Taglob::Rake::CheckTagsTask.new do |t|
+      t.pattern = pattern
+    end
+    task.pattern.should eql(pattern)
+  end
+  
   it "should raise error if invalid tags present" 
   it "should not raise error if only valid tags present"
 end
