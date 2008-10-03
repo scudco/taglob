@@ -1,6 +1,8 @@
+$:.unshift(File.join(File.dirname(__FILE__), 'lib'))
+
+require 'taglob'
 require 'rubygems'
 require 'hoe'
-require './lib/taglob.rb'
 require 'spec/rake/spectask'
 
 Hoe.new('Taglob', Taglob::VERSION) do |p|

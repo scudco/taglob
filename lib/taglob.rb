@@ -15,6 +15,8 @@
 # It is really just glob with some extra stuff thrown in.
 # Totally small, totally useless, totally taglob.
 
+require 'taglob/extensions'
+
 class Taglob
   VERSION = '0.1.0'
   
@@ -28,35 +30,3 @@ class Taglob
   end
 end
 
-class Dir
-
-  def self.tags(pattern)
-    Dir.glob(pattern).each do |file|
-      yield(file, File.tags(file))
-    end
-  end
-
-  def self.taglob(pattern,*tags)
-    tagged_files = []
-    self.tags(pattern) do |file,parsed_tags|
-      tagged_files << file if (tags - parsed_tags).empty?
-    end
-
-    tagged_files
-  end
-
-end
-
-class File
-  def self.tags(file)
-    parsed_tags = []
-    File.readlines(file).each do |line|
-      parsed_tags = parsed_tags | self.parse_tags(line)
-    end
-    parsed_tags
-  end
-
-  def self.parse_tags(line)
-    line =~ /^# ?tags:\s+(.*)/ ? $1.split(',').map {|tag| tag.strip} : []
-  end
-end
