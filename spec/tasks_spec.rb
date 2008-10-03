@@ -16,15 +16,13 @@ describe "Taza Tasks" do
   
   it "should create a rake task to run test unit tests marked with tags" do
     load @file_name 
-    tasks.include?("test_tag").should be_true
+    @rake.task_names_include?("test_tag").should be_true
   end
   
   it "should create a rake task to run specs marked with tags" do
     load @file_name 
-    tasks.include?("spec_tag").should be_true
+    @rake.task_names_include?("spec_tag").should be_true
   end
   
-  def tasks
-    @rake.tasks.collect{|task| task.name }
-  end
+
 end
