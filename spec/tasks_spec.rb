@@ -1,10 +1,11 @@
 require 'rubygems'
-require 'lib/tasks'
+require 'taglob/tasks'
+require 'spec/spec_helper'
 
 describe "Taza Tasks" do
   
   before :all do
-    @file_name ="./lib/tasks.rb"
+    @file_name ="./lib/taglob/tasks.rb"
     @rake = Rake::Application.new
     Rake.application = @rake
   end
