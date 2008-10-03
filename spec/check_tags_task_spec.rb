@@ -3,6 +3,11 @@ require 'taglob/rake'
 
 describe Taglob::Rake::CheckTagsTask do
     
+  before :all do
+    @missing_tags_source = 'spec/missing_tags.txt'
+    @valid_tags_source = 'spec/valid_tags.txt'
+  end
+    
   before :each do
     @file_name ="./lib/taglob/rake/check_tags_task.rb"
     @rake = Rake::Application.new
@@ -28,7 +33,7 @@ describe Taglob::Rake::CheckTagsTask do
   
   it "should build valid tag list from provided file" do
     task = Taglob::Rake::CheckTagsTask.new do |t|
-      t.valid_tag_source = 'spec/invalid_tags.txt'
+      t.valid_tag_source = @missing_tags_source
     end
     task.valid_tag_list.should eql(['foo'])
   end
@@ -37,7 +42,7 @@ describe Taglob::Rake::CheckTagsTask do
     $stderr.stubs(:puts)
     task = Taglob::Rake::CheckTagsTask.new :error_out do |t|
       t.pattern = 'spec/tagged_files/*.rb'
-      t.valid_tag_source = 'spec/invalid_tags.txt'
+      t.valid_tag_source = @missing_tags_source
     end
     lambda {@rake.invoke_task('error_out')}.should raise_error(SystemExit)
   end
@@ -47,7 +52,7 @@ describe Taglob::Rake::CheckTagsTask do
     $stderr.expects(:puts).with(regexp_matches(/foo_bar_buttz.rb/))
     task = Taglob::Rake::CheckTagsTask.new :error_out do |t|
       t.pattern = 'spec/tagged_files/*.rb'
-      t.valid_tag_source = 'spec/invalid_tags.txt'
+      t.valid_tag_source = @missing_tags_source
     end
     lambda {@rake.invoke_task('error_out')}.should raise_error(SystemExit)
   end
@@ -57,7 +62,7 @@ describe Taglob::Rake::CheckTagsTask do
     $stderr.expects(:puts).with(regexp_matches(/ epic,lulz /))
     task = Taglob::Rake::CheckTagsTask.new :error_out do |t|
       t.pattern = 'spec/tagged_files/*.rb'
-      t.valid_tag_source = 'spec/invalid_tags.txt'
+      t.valid_tag_source = @missing_tags_source
     end
     lambda {@rake.invoke_task('error_out')}.should raise_error(SystemExit)
   end
@@ -65,7 +70,7 @@ describe Taglob::Rake::CheckTagsTask do
   it "should not raise error if only valid tags present" do
     task = Taglob::Rake::CheckTagsTask.new :no_errors do |t|
       t.pattern = 'spec/tagged_files/*.rb'
-      t.valid_tag_source = 'spec/valid_tags.txt'
+      t.valid_tag_source = @valid_tags_source
     end
     lambda {@rake.invoke_task('no_errors')}.should_not raise_error(SystemExit)
   end
