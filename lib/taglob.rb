@@ -20,7 +20,7 @@ class Taglob
   
   def self.invalid_tags(pattern,valid_tags)
     invalids = {}
-    Dir.tags(pattern) do |file, tags|
+    Dir.tags(pattern).each do |file, tags|
       invalid_tags = tags - valid_tags
       invalids.merge!({file => invalid_tags}) if !invalid_tags.empty?
     end
@@ -31,17 +31,19 @@ end
 class Dir
 
   def self.tags(pattern)
+    files = {}
     Dir.glob(pattern).each do |file|
-      yield(file, File.tags(file))
+      tags = File.tags(file)
+      files.merge!({file => tags}) unless tags.empty?
     end
+    files
   end
 
   def self.taglob(pattern,*tags)
     tagged_files = []
-    self.tags(pattern) do |file,parsed_tags|
+    self.tags(pattern).each do |file,parsed_tags|
       tagged_files << file if (tags - parsed_tags).empty?
     end
-
     tagged_files
   end
 
@@ -51,12 +53,16 @@ class File
   def self.tags(file)
     parsed_tags = []
     File.readlines(file).each do |line|
-      parsed_tags = parsed_tags | self.parse_tags(line)
+      parsed_tags = parsed_tags | line.tags
     end
     parsed_tags
   end
+end
 
-  def self.parse_tags(line)
-    line =~ /^# ?tags:\s+(.*)/ ? $1.split(',').map {|tag| tag.strip} : []
+class String
+
+  def tags
+    self =~ /^# ?tags:\s+(.*)/ ? $1.split(',').map {|tag| tag.strip} : []
   end
+
 end
