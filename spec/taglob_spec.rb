@@ -3,7 +3,12 @@ require 'spec/spec_helper'
 
 describe Dir do
 
-  it "should produce a hash of files with an array of their associated tags"
+  it "should produce a hash of files with an array of their associated tags" do
+    tags = Dir.tags('spec/tagged_files/*.rb')
+    tags.should be_a_kind_of(Hash)
+    tags.should_not be_empty
+    tags.should have(3).items
+  end
 
   it "should select files containing a superset or the same set of the specified tags" do 
     tagged_files = Dir.taglob('spec/tagged_files/*.rb','foo','bar','buttz')
@@ -40,7 +45,11 @@ end
 
 describe File do
 
-  it "should produce an array of tags associated with a file"
+  it "should produce an array of tags associated with a file" do
+    tags = File.tags('spec/tagged_files/foo.rb')
+    tags.should be_a_kind_of(Array)
+    tags.should include('foo')
+  end
 
   it "should contain foo at first element" do
     tags = File.tags('spec/tagged_files/foo.rb')
