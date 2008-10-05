@@ -2,8 +2,9 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
+bin/taglob
 lib/taglob.rb
-spec/spec_taglob.rb
+spec/taglob_spec.rb
 spec/tagged_files/foo.rb
 spec/tagged_files/foo_bar_buttz.rb
 spec/tagged_files/epic_lulz.rb
