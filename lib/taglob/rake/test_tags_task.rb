@@ -15,7 +15,7 @@ module Taglob
       end
 
       def test_files
-        Dir.taglob(pattern,tags)
+        Dir.taglob(pattern,tags) unless tags.nil? || pattern.nil?
       end
     end
     

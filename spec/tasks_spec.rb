@@ -9,11 +9,7 @@ describe "Premade Rake Tasks" do
   after :all do
     Rake.application = nil
   end
-
-  before :each do
-    Dir.stubs(:taglob).returns(['spec/tagged_files/foo.rb'])
-  end
-
+  
   it "should create a rake task to run test unit tests marked with tags" do
     load @file_name
     @rake.task_names_include?("test_tags").should be_true
