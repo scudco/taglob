@@ -1,4 +1,5 @@
 require 'spec/spec_helper'
+require 'taglob'
 
 describe "Dir#tagor" do
   it "should find all files containing either tag" do

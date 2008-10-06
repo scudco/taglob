@@ -1,8 +1,8 @@
 require 'rubygems'
-require 'taglob/rake'
 require 'spec/spec_helper'
+require 'taglob/rake'
 
-describe "Taza Tasks" do
+describe "Test/Spec Tags Task" do
 
   before :all do
     @file_name ="./lib/taglob/rake/test_task.rb"

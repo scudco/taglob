@@ -1,5 +1,5 @@
-require 'taglob'
 require 'spec/spec_helper'
+require 'taglob'
 
 describe Taglob do
   it "should provide invalid tags" do
