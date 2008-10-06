@@ -3,27 +3,28 @@ require 'taglob/rake'
 require 'spec/spec_helper'
 
 describe "Taza Tasks" do
-  
+
   before :all do
     @file_name ="./lib/taglob/rake/test_task.rb"
     @rake = Rake::Application.new
     Rake.application = @rake
   end
-  
+
   after :all do
-    Rake.application = nil 
+    Rake.application = nil
   end
-  
+
   it "should create a rake task to run test unit tests marked with tags" do
-    load @file_name 
-    @rake.task_names_include?("test_tag").should be_true
+    Dir.stubs(:taglob).returns(['spec/tagged_files/foo.rb'])
+    task = Taglob::Rake::TestTagsTask.new :applePie
+    @rake.task_names_include?("applePie").should be_true
   end
-  
+
   it "should create a rake task to run specs marked with tags" do
-    load @file_name 
+    load @file_name
     @rake.task_names_include?("spec_tag").should be_true
   end
-  
+
   it "should be able to run tags grouped as a OR" do
     task = Taglob::Rake::TestTagsTask.new :or_test do |t|
       t.pattern = 'spec/tagged_files/*.rb'
@@ -36,7 +37,7 @@ describe "Taza Tasks" do
   end
 
   it "should be able to run tags grouped as a AND" do
-   task = Taglob::Rake::TestTagsTask.new :and_test do |t|
+    task = Taglob::Rake::TestTagsTask.new :and_test do |t|
       t.pattern = 'spec/tagged_files/*.rb'
       t.tags = "foo,bar"
     end
