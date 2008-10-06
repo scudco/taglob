@@ -24,5 +24,25 @@ describe "Taza Tasks" do
     @rake.task_names_include?("spec_tag").should be_true
   end
   
+  it "should be able to run tags grouped as a OR" do
+    task = Taglob::Rake::TestTagsTask.new :or_test do |t|
+      t.pattern = 'spec/tagged_files/*.rb'
+      t.tags = "bar|lulz"
+    end
+    tagged_files = task.test_files
+    tagged_files.should_not include('spec/tagged_files/foo.rb')
+    tagged_files.should include('spec/tagged_files/foo_bar_buttz.rb')
+    tagged_files.should include('spec/tagged_files/epic_lulz.rb')
+  end
 
+  it "should be able to run tags grouped as a AND" do
+   task = Taglob::Rake::TestTagsTask.new :and_test do |t|
+      t.pattern = 'spec/tagged_files/*.rb'
+      t.tags = "foo,bar"
+    end
+    tagged_files = task.test_files
+    tagged_files.should_not include('spec/tagged_files/foo.rb')
+    tagged_files.should include('spec/tagged_files/foo_bar_buttz.rb')
+    tagged_files.should_not include('spec/tagged_files/epic_lulz.rb')
+  end
 end
