@@ -16,13 +16,14 @@ describe "Taza Tasks" do
 
   it "should create a rake task to run test unit tests marked with tags" do
     Dir.stubs(:taglob).returns(['spec/tagged_files/foo.rb'])
-    task = Taglob::Rake::TestTagsTask.new :applePie
-    @rake.task_names_include?("applePie").should be_true
+    task = Taglob::Rake::TestTagsTask.new :test_unit
+    @rake.task_names_include?("test_unit").should be_true
   end
 
-  it "should create a rake task to run specs marked with tags" do
-    load @file_name
-    @rake.task_names_include?("spec_tag").should be_true
+  it "should create a rake task to run spec tests marked with tags" do
+    Dir.stubs(:taglob).returns(['spec/tagged_files/foo.rb'])
+    task = Taglob::Rake::SpecTagsTask.new :spec_tests
+    @rake.task_names_include?("spec_tests").should be_true
   end
 
   it "should be able to run tags grouped as a OR" do
