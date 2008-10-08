@@ -11,7 +11,7 @@ describe Dir do
   end
 
   it "should select files containing a superset or the same set of the specified tags" do 
-    tagged_files = Dir.taglob('spec/tagged_files/*.rb','foo','bar','buttz')
+    tagged_files = Dir.taglob('spec/tagged_files/*.rb','foo,bar,buttz')
     tagged_files.should be_a_kind_of(Array)
     tagged_files.should_not be_empty
     tagged_files.should have(1).items
@@ -20,7 +20,7 @@ describe Dir do
   end
   
   it "should not select files that are not tagged with specified tags" do
-    tagged_files = Dir.taglob('spec/tagged_files/*.rb','lol','rofl')
+    tagged_files = Dir.taglob('spec/tagged_files/*.rb','lol,rofl')
     tagged_files.should be_a_kind_of(Array)
     tagged_files.should be_empty
   end
@@ -34,7 +34,7 @@ describe Dir do
   end
   
   it "should count every taglob line" do
-    tagged_files = Dir.taglob('spec/tagged_files/*.rb','epic','lulz')
+    tagged_files = Dir.taglob('spec/tagged_files/*.rb','epic,lulz')
     tagged_files.should be_a_kind_of(Array)
     tagged_files.should_not be_empty
     tagged_files.should have(1).items

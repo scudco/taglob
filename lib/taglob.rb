@@ -15,7 +15,9 @@
 # It is really just glob with some extra stuff thrown in.
 # Totally small, totally useless, totally taglob.
 
-class Taglob
+require 'taglob/extensions'
+
+module Taglob
   VERSION = '0.1.0'
   
   def self.invalid_tags(pattern,valid_tags)
@@ -26,43 +28,4 @@ class Taglob
     end
     invalids
   end
-end
-
-class Dir
-
-  def self.tags(pattern)
-    files = {}
-    Dir.glob(pattern).each do |file|
-      tags = File.tags(file)
-      files.merge!({file => tags}) unless tags.empty?
-    end
-    files
-  end
-
-  def self.taglob(pattern,*tags)
-    tagged_files = []
-    self.tags(pattern).each do |file,parsed_tags|
-      tagged_files << file if (tags - parsed_tags).empty?
-    end
-    tagged_files
-  end
-
-end
-
-class File
-  def self.tags(file)
-    parsed_tags = []
-    File.readlines(file).each do |line|
-      parsed_tags = parsed_tags | line.tags
-    end
-    parsed_tags
-  end
-end
-
-class String
-
-  def tags
-    self =~ /^# ?tags:\s+(.*)/ ? $1.split(',').map {|tag| tag.strip} : []
-  end
-
 end
