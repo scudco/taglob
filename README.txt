@@ -9,6 +9,9 @@ http://github.com/scudco/taglob/tree/master
 == FEATURES/PROBLEMS:
 
 * easily select tagged Ruby files
+* rake tasks for test::unit and rspec
+* rake task for checking against a valid list of tags
+* can AND or OR tags
 
 == SYNOPSIS:
 
@@ -35,31 +38,48 @@ Totally small, totally useless, totally taglob.
   
   Dir.taglob('**/*.rb','foo','bar','buttz').each {|file| puts "#{file} was tagged with foo or bar or buttz!"}
 
+On a more serious note:
+  * Dir.taglob('**/*.rb','tags,for,the,win') <- Will produce an array of files that contain all these tags(AND)
+  * Dir.taglob('**/*.rb','tags|or|the|win') <- Will produce an array of files that contain any of these tags(OR)
+  * rake spec SPEC_OPTS='-f specdoc' <- More infroz(this obviously needs to be run from the gem directory :P)
+  * taglob binary!
+    * $ taglob <dirname> <- produces a list of files in <dirname> with their respective tags
+    * $ taglob <file> <- produces a list of tags for that file
+  * Rake tasks!
+    * You can now require 'taglob/rake/tasks' in your Rakefile to get test_tag and spec_tag tasks that would be used like this:
+      * $ rake spec_tag tags="for,the,win"
+      * $ rake test_tag tags="foo|bar"
+    * You can also specify your own TestTagTasks in your Rakefile:
+      require 'taglob/rake'
+
+      Taglob::Rake::SpecTagsTask.new :spec_regression do |t|
+        t.pattern = 'spec/**/*.rb'
+        t.tags = "regression|smoke"
+      end
+      Taglob::Rake::TestTagsTask.new :test_regression do |t|
+        t.pattern = 'test/**/*.rb'
+        t.tags = "regression|smoke"
+      end
+    * CheckTagsTask will check all tags in a glob pattern against a valid list of tags
+      require 'taglob/rake'
+      task = Taglob::Rake::CheckTagsTask.new do |t|
+        t.pattern = 'spec/**/*.rb'
+        t.valid_tag_source = 'config/valid_tags.txt'
+      end
+
+
 == INSTALL:
+
+* sudo gem install taglob
+
+== UNINSTALL:
+
+* sudo gem uninstall taglob
+
+== REINSTALL
 
 * sudo gem install taglob
 
 == LICENSE:
 
-(The MIT License)
-
-Copyright (c) 2008 Adam Anderson
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+The copyrights-are-an-imaginary-construct license.
