@@ -1,3 +1,8 @@
+=== 1.0.1 / 2008-10-15
+
+* Minor Changes
+  * Updated Documentation to be more accurate
+
 === 1.0.0 / 2008-10-08
 
 * Important changes
@@ -15,11 +20,11 @@
       require 'taglob/rake'
 
       Taglob::Rake::SpecTagsTask.new :spec_regression do |t|
-        t.pattern = 'spec/**/*.rb'
+        t.pattern = 'spec/**/*_spec.rb'
         t.tags = "regression|smoke"
       end
       Taglob::Rake::TestTagsTask.new :test_regression do |t|
-        t.pattern = 'test/**/*.rb'
+        t.pattern = 'test/**/test_*.rb'
         t.tags = "regression|smoke"
       end
     * CheckTagsTask will check all tags in a glob pattern against a valid list of tags

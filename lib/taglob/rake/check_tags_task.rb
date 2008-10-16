@@ -4,6 +4,15 @@ require 'taglob'
 
 module Taglob
   module Rake
+# CheckTagsTask will check all tags in a glob pattern against a valid list of tags
+#
+# Example :
+#      require 'taglob/rake'
+#      task = Taglob::Rake::CheckTagsTask.new do |t|
+#        t.pattern = 'spec/**/*_spec.rb'
+#        t.valid_tag_source = 'config/valid_tags.txt'
+#      end
+#
     class CheckTagsTask < ::Rake::TaskLib
       attr_accessor :pattern
       attr_accessor :valid_tag_source
