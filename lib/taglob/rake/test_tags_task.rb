@@ -1,6 +1,7 @@
 require 'rake'
 require 'rake/testtask'
 require 'spec/rake/spectask'
+require 'taglob'
 
 module Taglob
   module Rake

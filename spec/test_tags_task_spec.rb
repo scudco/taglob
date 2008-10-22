@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'spec/spec_helper'
-require 'taglob/rake'
+require 'taglob/rake/test_tags_task'
 
 describe "Test/Spec Tags Task" do
 
