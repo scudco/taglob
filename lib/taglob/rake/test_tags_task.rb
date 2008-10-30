@@ -27,6 +27,7 @@ module Taglob
       def initialize(name)
         @name = name
         yield self if block_given?
+        ENV['tags'] = @tags
         define
       end
 
