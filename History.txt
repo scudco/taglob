@@ -1,3 +1,8 @@
+=== 1.0.2 / 2008-11-04
+
+* Minor Changes
+  * Fixed a small bug where rake tasks could not be required unless all of taglob was required
+
 === 1.0.1 / 2008-10-15
 
 * Minor Changes
