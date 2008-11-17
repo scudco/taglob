@@ -12,6 +12,7 @@ lib/taglob/rake.rb
 lib/taglob/rake/check_tags_task.rb
 lib/taglob/rake/tasks.rb
 lib/taglob/rake/test_tags_task.rb
+lib/taglob/spec/tag_html_formatter.rb
 spec/check_tags_task_spec.rb
 spec/dir_tagor_spec.rb
 spec/missing_tags.txt
