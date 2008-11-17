@@ -18,7 +18,7 @@
 require 'taglob/extensions'
 
 module Taglob
-  VERSION = '1.0.2'
+  VERSION = '1.1.0'
   
   def self.invalid_tags(pattern,valid_tags)
     invalids = {}
