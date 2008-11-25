@@ -10,11 +10,9 @@ class Dir
   end
 
   def self.taglob(pattern,tags)
-    if(tags.include?('|'))
-      Dir.tag_or(pattern,*tags.split('|'))      
-    else
-      Dir.tag_and(pattern,*tags.split(','))      
-    end
+    return glob(pattern) if tags.nil?
+    return Dir.tag_or(pattern,*tags.split('|')) if tags.include?('|') 
+    Dir.tag_and(pattern,*tags.split(',')) 
   end
 
   def self.tag_and(pattern, *tags)

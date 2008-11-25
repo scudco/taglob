@@ -41,6 +41,13 @@ describe Dir do
     tagged_files.should include('spec/tagged_files/epic_lulz.rb')
   end
 
+  it "should act like a regular glob if tags are nil" do
+    pattern = 'spec/tagged_files/*.rb'
+    globbed_files = Dir.glob(pattern)
+    tagged_files = Dir.taglob('spec/tagged_files/*.rb',nil)
+    (tagged_files - globbed_files).should be_empty
+  end
+
 end
 
 describe File do
