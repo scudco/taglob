@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{taglob}
-  s.version = "1.1.0"
+  s.version = "1.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Adam Anderson"]
-  s.date = %q{2008-11-17}
+  s.date = %q{2008-11-25}
   s.default_executable = %q{taglob}
   s.description = %q{Tagging for Ruby files}
   s.email = %q{adamandersonis@gmail.com}
