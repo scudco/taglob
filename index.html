@@ -7,6 +7,28 @@
 
 	<title>scudco/taglob @ GitHub</title>
 	
+  <!-- Vim Syntax CSS -->
+  <style type="text/css">
+    <!--
+    .Identifier { color: #ffffff; }
+    .Special { color: #fb8000; }
+    .rubyInterpolation { color: #ffffff; }
+    .Include { color: #ffcc00; }
+    .rubyStringDelimiter { color: #66ff00; }
+    .String { color: #66ff00; }
+    .Type { color: #ffffff; }
+    .Statement { color: #ff6600; }
+    .lnr { color: #bfbfbf; }
+    .Function { color: #ffcc00; }
+    .rubyStringDelimiter { color: #66ff00; }
+    .Comment { color: #9933cc; }
+    .rubySymbol { color: #339999; }
+    .Define { color: #ff6600; }
+    pre { font-family: monospace; color: #ffffff; background-color: #000000; }
+    -->
+  </style>
+
+  <!-- Regular CSS -->
 	<style type="text/css">
 		body {
   		margin-top: 1.0em;
@@ -27,6 +49,13 @@
     .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
     .download { float: right; }
 		pre { background: #000; color: #fff; padding: 15px;}
+    code {
+      font-size: 90%;
+      line-height: 1.4em;
+      color: #ff8;
+      background-color: #111;
+      padding: 2px 10px 2px 10px;
+    }    
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
 	</style>
@@ -52,10 +81,103 @@
       tags + Dir.glob = Dir.taglob!
     </div>
 
+    <h2>Features</h2>
+    <ul>
+      <li>easily select tagged Ruby files</li>
+      <li>rake tasks for Test::Unit and RSpec</li>
+      <li>rake task for checking against a valid list of tags</li>
+      <li>can AND or OR tags</li>
+    </ul>
+
+    <h2>Synopsis</h2>
+    Taglob is great. Check this out.
+    Imagine a bunch of files that look like
+
+<pre><span class="lnr">1 </span><span class="Comment">#tags: zomg,buttz,foo,important</span>
+<span class="lnr">2 </span><span class="Define">class</span> <span class="Type">Lol</span>
+<span class="lnr">3 </span>  <span class="Define">def</span> <span class="Function">lulz</span>
+<span class="lnr">4 </span>    puts <span class="rubyStringDelimiter">&quot;</span><span class="String">here are your lulz, sir</span><span class="rubyStringDelimiter">&quot;</span>
+<span class="lnr">5 </span>  <span class="Define">end</span>
+<span class="lnr">6 </span><span class="Define">end</span></pre>
+
+<pre><span class="lnr">1 </span><span class="Comment">#tags: zomg,buttz,foo,important</span>
+<span class="lnr">2 </span><span class="Define">class</span> <span class="Type">Lol</span>
+<span class="lnr">3 </span>  <span class="Define">def</span> <span class="Function">lulz</span>
+<span class="lnr">4 </span>    puts <span class="rubyStringDelimiter">&quot;</span><span class="String">here are your lulz, sir</span><span class="rubyStringDelimiter">&quot;</span>
+<span class="lnr">5 </span>  <span class="Define">end</span>
+<span class="lnr">6 </span><span class="Define">end</span></pre>
+
+<p>
+  And then you are like dang I wish I could glob these files based on the 
+  tags I setup! What am I doing with my life???
+</p>
+<p>
+  Taglob! (like Tada! but more like its unsophisticated country cousin(in name only(parentheses)))
+</p>
+  <pre><code>Dir.taglob("**/*.rb","foo","lol")</code></pre>
+<p>
+  That will totally give you back all the files tagged with 'foo' and 'lol' in an array of strings representing the paths 
+  of those files.
+  It is really just glob with some extra stuff thrown in.
+  Totally small, totally useless, totally taglob.
+</p>
+
+<pre><span class="lnr">1 </span><span class="Include">require</span> <span class="rubyStringDelimiter">'</span><span class="String">rubygems</span><span class="rubyStringDelimiter">'</span>
+<span class="lnr">2 </span><span class="Include">require</span> <span class="rubyStringDelimiter">'</span><span class="String">taglob</span><span class="rubyStringDelimiter">'</span>
+<span class="lnr">3 </span>
+<span class="lnr">4 </span><span class="Type">Dir</span>.taglob(<span class="rubyStringDelimiter">'</span><span class="String">**/*.rb</span><span class="rubyStringDelimiter">'</span>,<span class="rubyStringDelimiter">'</span><span class="String">foo</span><span class="rubyStringDelimiter">'</span>,<span class="rubyStringDelimiter">'</span><span class="String">bar</span><span class="rubyStringDelimiter">'</span>,<span class="rubyStringDelimiter">'</span><span class="String">buttz</span><span class="rubyStringDelimiter">'</span>).each <span class="Statement">do</span> |<span class="Identifier">file</span>|
+<span class="lnr">5 </span>  puts <span class="rubyStringDelimiter">&quot;</span><span class="Special">#{</span><span class="rubyInterpolation">file</span><span class="Special">}</span><span class="String"> was tagged with foo or bar or buttz!</span><span class="rubyStringDelimiter">&quot;</span>
+<span class="lnr">6 </span><span class="Statement">end</span></pre>
+
+On a more serious note:
+  <ul>
+    <li><code>Dir.taglob('**/*.rb','tags,for,the,win')</code> <- Will produce an array of files that contain all these tags(AND)</li>
+    <li><code>Dir.taglob('**/*.rb','tags|or|the|win')</code> <- Will produce an array of files that contain any of these tags(OR)</li>
+    <li><code>$ rake spec SPEC_OPTS='-f specdoc'</code> <- More infroz(this obviously needs to be run from the gem directory :P)</li>
+    <li>taglob binary!</li>
+    <ul>
+      <li><code>$ taglob &lt;dirname&gt;</code> <- produces a list of files in <dirname> with their respective tags</li>
+      <li><code>$ taglob &lt;file&gt;</code> <- produces a list of tags for that file</li>
+    </ul>
+    <li>Rake tasks!</li>
+    <ul>
+      <li>You can now <code>require 'taglob/rake/tasks'</code> in your Rakefile to get <code>test_tag</code> and <code>spec_tag</code> tasks that would be used like this:</li>
+      <li><code>$ rake spec_tag tags="for,the,win"</code></li>
+      <li><code>$ rake test_tag tags="foo|bar"</code></li>
+      <li>You can also specify your own TestTagTasks in your Rakefile:</li>
+<pre><span class="lnr"> 1 </span><span class="Include">require</span> <span class="rubyStringDelimiter">'</span><span class="String">taglob/rake</span><span class="rubyStringDelimiter">'</span>
+<span class="lnr"> 2 </span>
+<span class="lnr"> 3 </span><span class="Type">Taglob</span>::<span class="Type">Rake</span>::<span class="Type">SpecTagsTask</span>.new <span class="rubySymbol">:spec_regression</span> <span class="Statement">do</span> |<span class="Identifier">t</span>|
+<span class="lnr"> 4 </span>  t.pattern = <span class="rubyStringDelimiter">'</span><span class="String">spec/**/*.rb</span><span class="rubyStringDelimiter">'</span>
+<span class="lnr"> 5 </span>  t.tags = <span class="rubyStringDelimiter">&quot;</span><span class="String">regression|smoke</span><span class="rubyStringDelimiter">&quot;</span>
+<span class="lnr"> 6 </span><span class="Statement">end</span>
+<span class="lnr"> 7 </span><span class="Type">Taglob</span>::<span class="Type">Rake</span>::<span class="Type">TestTagsTask</span>.new <span class="rubySymbol">:test_regression</span> <span class="Statement">do</span> |<span class="Identifier">t</span>|
+<span class="lnr"> 8 </span>  t.pattern = <span class="rubyStringDelimiter">'</span><span class="String">test/**/*.rb</span><span class="rubyStringDelimiter">'</span>
+<span class="lnr"> 9 </span>  t.tags = <span class="rubyStringDelimiter">&quot;</span><span class="String">regression|smoke</span><span class="rubyStringDelimiter">&quot;</span>
+<span class="lnr">10 </span><span class="Statement">end</span></pre>
+      <li>CheckTagsTask will check all tags in a glob pattern against a valid list of tags</li>
+<pre>
+<span class="lnr">1 </span><span class="Include">require</span> <span class="rubyStringDelimiter">'</span><span class="String">taglob/rake</span><span class="rubyStringDelimiter">'</span>
+<span class="lnr">2 </span>
+<span class="lnr">3 </span><span class="Type">Taglob</span>::<span class="Type">Rake</span>::<span class="Type">CheckTagsTask</span>.new <span class="Statement">do</span> |<span class="Identifier">t</span>|
+<span class="lnr">4 </span>  t.pattern = <span class="rubyStringDelimiter">'</span><span class="String">spec/**/*.rb</span><span class="rubyStringDelimiter">'</span>
+<span class="lnr">5 </span>  t.valid_tag_source = <span class="rubyStringDelimiter">'</span><span class="String">config/valid_tags.txt</span><span class="rubyStringDelimiter">'</span>
+<span class="lnr">6 </span><span class="Statement">end</span>
+</pre>
+    </ul>
+  </ul>
+
+
+    <h2>Installation</h2>
+    <p>sudo gem install taglob</p>
+
+    <h2>License</h2>
+    <p>The copyrights-are-an-imaginary-construct license.</p>
+
     <h2>Authors</h2>
-<p>Adam Anderson (adamandersonis@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Adam Anderson (adamandersonis@gmail.com)<br/>      </p>
+    <p>Adam Anderson (adamandersonis@gmail.com)<br/><br/>      </p>
+    <h2>Contact</h2>
+    <p>Adam Anderson (adamandersonis@gmail.com)<br/>      </p>
 
 
     <h2>Download</h2>
