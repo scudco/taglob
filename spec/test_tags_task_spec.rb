@@ -6,12 +6,12 @@ describe "Test/Spec Tags Task" do
 
   before :all do
     @file_name ="./lib/taglob/rake/test_task.rb"
-    @rake = Rake::Application.new
-    Rake.application = @rake
+    @rake = ::Rake::Application.new
+    ::Rake.application = @rake
   end
 
   after :all do
-    Rake.application = nil
+    ::Rake.application = nil
   end
 
   it "should create a rake task to run test unit tests marked with tags" do

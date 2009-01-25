@@ -10,12 +10,12 @@ describe Taglob::Rake::CheckTagsTask do
     
   before :each do
     @file_name ="./lib/taglob/rake/check_tags_task.rb"
-    @rake = Rake::Application.new
-    Rake.application = @rake
+    @rake = ::Rake::Application.new
+    ::Rake.application = @rake
   end
   
   after :each do
-    Rake.application = nil 
+    ::Rake.application = nil 
   end
   
   it "should define a rake task depending on provided name" do
