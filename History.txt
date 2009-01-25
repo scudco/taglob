@@ -1,6 +1,6 @@
 === 1.1.2 / 2009-01-24
 * Minor Changes
-  * Dir.taglob will now act like a regular glob if tags passed in is nil
+  * Changed from Hoe to Jeweler
 
 === 1.1.1 / 2008-11-25
 * Minor Changes
