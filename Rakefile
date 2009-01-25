@@ -14,7 +14,8 @@ begin
     s.homepage = "http://scudco.github.com/taglob"
     s.description = "Tagging for Ruby files"
     s.authors = ["Adam Anderson"]
-    s.executables = ['bin/taglob']
+    s.files =  FileList["[A-Z]*", "{bin,generators,lib,spec}/**/*"]
+    s.executables = ['taglob']
     s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
     s.has_rdoc = true
     s.rdoc_options = ["--main", "README.txt"]
