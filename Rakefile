@@ -5,14 +5,22 @@ require 'rubygems'
 require 'hoe'
 require 'spec/rake/spectask'
 
-Hoe.new('Taglob', Taglob::VERSION) do |p|
-  p.name = "taglob"
-  p.author = "Adam Anderson"
-  p.description = "Tagging for Ruby files"
-  p.email = 'adamandersonis@gmail.com'
-  p.summary = "Dir.taglob selects tagged Ruby files"
-  p.url = "http://taglob.rubyforge.org"
-  p.remote_rdoc_dir = '' # Release to root
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |s|
+    s.name = "taglob"
+    s.summary = "Dir.taglob selects tagged Ruby files"
+    s.email = "adamandersonis@gmail.com"
+    s.homepage = "http://scudco.github.com/taglob"
+    s.description = "Tagging for Ruby files"
+    s.authors = ["Adam Anderson"]
+    s.executables = ['bin/taglob']
+    s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
+    s.has_rdoc = true
+    s.rdoc_options = ["--main", "README.txt"]
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
 desc "Run all examples"
